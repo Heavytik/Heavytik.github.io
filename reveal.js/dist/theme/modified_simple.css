@@ -153,6 +153,9 @@
    display: block;
    margin-left: 40px; }
  
+   li {
+     margin-bottom: 0.5em;
+   }
  .reveal dt {
    font-weight: bold; }
  

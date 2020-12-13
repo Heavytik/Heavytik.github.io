@@ -15,7 +15,9 @@
    #+ATTR_REVEAL: :frag (appear)
    - Kahden muuttujan yhtälössä muuttujakirjaimia on kaksi
    - Ratkaisuna täytyy etsiä arvot muuttujille, siten että yhtälö on tosi
-   - Lasketaan yhtälöparille x + y = 10 mahdollisia ratkaisuja
+   - Lasketaan yhtälöparille
+     $$x + y = 10$$
+     mahdollisia ratkaisuja
 
 ** Tehtävät tunnilla
    sivulta 23 tehtävät 1, 2, 3 ja 6
