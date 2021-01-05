@@ -2,10 +2,11 @@
 
 addedFilesInfo=()
 
-# change to your own jar folder path!!!
+# CHANGE TO YOUR OWN JAR LOCATION, VAIHDA TÄHÄN OMA JAR SIJAINTISI
 # dont use ~ as home-directory!
 jpath="/Users/jere/Documents/study/TIEP111/jar/"
-# change to your own Eclipse dropins path!!!
+
+# CHANGE TO YOUR OWN ECLIPSE/DROPINS LOCATION, VAIHDA TÄHÄN OMA ECLIPSE/DROPINS SIJAINTISI
 dpath="/Applications/Eclipse.app/Contents/Eclipse/dropins/"
 
 # filenames in arrays
@@ -13,6 +14,7 @@ jnames=("fxgui.jar"
 "Ali.jar"
 "Graphics.jar"
 "Music.jar")
+
 dnames=("FXMLpackage_1.0.0.jar"
 "comtestplug_1.0.13.jar")
 
@@ -21,12 +23,14 @@ jurls=("https://svn.cc.jyu.fi/srv/svn/ohj2/FXExamples/trunk/FXGui/fxgui.jar"
 "https://svn.cc.jyu.fi/srv/svn/ohj2/Ali/trunk/Ali.jar"
 "https://svn.cc.jyu.fi/srv/svn/ohj1/graphics/trunk/Graphics.jar"
 "https://svn.cc.jyu.fi/srv/svn/ohj1/music/trunk/Music.jar")
+
 durls=("https://svn.cc.jyu.fi/srv/svn/ohj2/FXExamples/trunk/FXMLPackage/plugins/FXMLpackage_1.0.0.jar"
 "https://svn.cc.jyu.fi/srv/svn/comtest/proto/ji/trunk/plugins/comtestplug_1.0.13.jar")
 
+# JAR
 # check if file exists
-# if yes, check newer version -N
-# if not, load with timestamp -S
+# if yes, check newer version (option -N)
+# if not, load with timestamp (option -S)
 for fn in 0 1 2 3
 do
   fullpath="$jpath${jnames[$fn]}"
@@ -39,6 +43,7 @@ do
   fi
 done
 
+# DROPINS
 # check if file exists
 # if yes, check newer version -N
 # if not, load with timestamp -S
