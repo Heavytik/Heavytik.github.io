@@ -1,0 +1,65 @@
+#!/bin/bash
+
+addedFilesInfo=()
+
+# change to your own jar folder path!!!
+# dont use ~ as home-directory!
+jpath="/Users/jere/Documents/study/TIEP111/jar/"
+# change to your own Eclipse dropins path!!!
+dpath="/Applications/Eclipse.app/Contents/Eclipse/dropins/"
+
+# filenames in arrays
+jnames=("fxgui.jar"
+"Ali.jar"
+"Graphics.jar"
+"Music.jar")
+dnames=("FXMLpackage_1.0.0.jar"
+"comtestplug_1.0.13.jar")
+
+# urls in arrays
+jurls=("https://svn.cc.jyu.fi/srv/svn/ohj2/FXExamples/trunk/FXGui/fxgui.jar"
+"https://svn.cc.jyu.fi/srv/svn/ohj2/Ali/trunk/Ali.jar"
+"https://svn.cc.jyu.fi/srv/svn/ohj1/graphics/trunk/Graphics.jar"
+"https://svn.cc.jyu.fi/srv/svn/ohj1/music/trunk/Music.jar")
+durls=("https://svn.cc.jyu.fi/srv/svn/ohj2/FXExamples/trunk/FXMLPackage/plugins/FXMLpackage_1.0.0.jar"
+"https://svn.cc.jyu.fi/srv/svn/comtest/proto/ji/trunk/plugins/comtestplug_1.0.13.jar")
+
+# check if file exists
+# if yes, check newer version -N
+# if not, load with timestamp -S
+for fn in 0 1 2 3
+do
+  fullpath="$jpath${jnames[$fn]}"
+  echo $fullpath
+  if [ -f $fullpath ]; then
+    wget -N "${jurls[$fn]}" -P "$jpath"
+  else
+    wget -S "${jurls[$fn]}" -P "$jpath"
+    addedFilesInfo+="LOADED NEW FILE ${jnames[$fn]} TO $jpath"
+  fi
+done
+
+# check if file exists
+# if yes, check newer version -N
+# if not, load with timestamp -S
+for fn in 0 1 
+do
+  fullpath="$dpath${dnames[$fn]}"
+  echo $fullpath
+  if [ -f $fullpath ]; then
+    wget -N "${durls[$fn]}" -P "$dpath"
+  else
+    wget -S "${durls[$fn]}" -P "$dpath"
+    addedFilesInfo+="LOADED NEW FILE ${dnames[$fn]} TO $dpath"
+  fi
+done
+
+# print some info at the end
+if [ ${#addedFilesInfo[@]} -eq 0 ]; then
+  echo "NO NEW FILES CREATED (MAYBE UPDATES)"
+else
+  for info in ${addedFilesInfo}
+  do
+    echo "$info"
+  done
+fi
