@@ -1,14 +1,51 @@
 <!DOCTYPE html>
 <html lang="fi">
+<head>
+    <meta charset="utf-8" />
 <title>Isokylä, yläkoulu</title>
+</head>
 <body>
 
 <h1>Isokylän yläkoulu, tiedotteet</h1>
 
 <div class="content">
+    <div id="ruokalista">
+        Tämä on tämänpäivän ruoka
+    </div>
+    <div id="info">
+        Tämä on infoa... :D
+    </div>
 </div>
 
+<script>
+  function alusta() {
 
+    var naytaInfo = false;
+
+    function vaihdaNakyma() {
+      if (naytaInfo === true) {
+        document.getElementById('ruokalista').style.visibility = 'visible';
+        document.getElementById('info').style.visibility = 'hidden';
+        naytaInfo = false;
+      } else {
+        document.getElementById('ruokalista').style.visibility = 'hidden';
+        document.getElementById('info').style.visibility = 'visible';
+        naytaInfo = true;
+      }
+    }
+
+    function toisto() {
+      console.log('tilanne', naytaInfo)
+      vaihdaNakyma();
+      setTimeout(toisto, 2000)
+    }
+
+    return toisto;
+  }
+
+  const toistofunktio = alusta();
+  toistofunktio();
+
+</script>
 </body>
 </html>
-
