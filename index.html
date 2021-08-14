@@ -3,67 +3,106 @@
 <head>
     <meta charset="utf-8"/>
     <title>Isokylä, yläkoulu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <style>
+
         body {
             font-family: Verdana, sans-serif;
         }
-
         h1 {
-            font-size: 10rem;
-            margin-bottom: 10rem;
-            margin-top: 10rem;
+            font-size: 8rem;
+            margin-bottom: 6rem;
+            margin-top: 6rem;
         }
         h2 {
-            font-size: 8rem;
+            font-size: 7rem;
         }
-
         .huomioteksti {
             font-size: 6rem;
+        }
+
+        @media screen and (max-width: 2000px) {
+            h1 {
+                font-size: 4rem;
+                margin-bottom: 2rem;
+                margin-top: 2rem;
+            }
+            h2 {
+                font-size: 3rem;
+            }
+            .huomioteksti {
+                font-size: 2.7rem;
+            }
+        }
+
+        /* On screens that are 600px or less, set the background color to olive */
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                margin-top: 1rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .huomioteksti {
+                font-size: 1.6rem;
+            }
         }
     </style>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-auto align-self-center">
             <h1>Isokylän yläkoulu, tiedotteet</h1>
         </div>
     </div>
-    <div class="row mx-5">
-        <div class="col-3 text-danger huomioteksti">
-            <p>tänään ruokana:</p>
-            <p id="ruoka"></p>
-        </div>
-        <div class="col-9 huomioteksti" id="ohjelma">
+    <div class="row mx-md-5">
+        <div class="col-12 col-xxl-6 huomioteksti">
             <div class="mb-5">
-                <h2 class="mb-5">tänää ohjelmassa:</h2>
-                <ul class="text-info" id="tanaanOhjelmaa"></ul>
+                <h2 class="mb-5">tänää:</h2>
+                <ul class="mx-md-5 text-info" id="tanaanOhjelmaa"></ul>
             </div>
+        </div>
+        <div class="col-12 col-xxl-6 huomioteksti">
             <div>
-                <h2 class="mb-5">huomenna ohjelmassa:</h2>
-                <ul class="text-info" id="huomennaOhjelmaa"></ul>
+                <h2 class="mb-5">huomenna:</h2>
+                <ul class="mx-md-5 text-info" id="huomennaOhjelmaa"></ul>
             </div>
         </div>
     </div>
 </div>
-
+<footer class="mt-auto">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto mb-5 text-danger huomioteksti text-nowrap">
+                <p id="ruoka"></p>
+            </div>
+        </div>
+    </div>
+</footer>
 <script>
   const ruokalista = [
-    {paiva: new Date(2021, 7, 13, 20), ruoka: 'kinkkukiusaus'},
-    {paiva: new Date(2021, 7, 14, 20), ruoka: 'perunamuusi ja lohi'},
-    {paiva: new Date(2021, 7, 14, 20), ruoka: 'sillisalaatti'},
-    {paiva: new Date(2021, 7, 15, 20), ruoka: 'pinaattikeitto'}
+    {paiva: new Date(2021, 7, 15), ruoka: ''},
+    {paiva: new Date(2021, 7, 16), ruoka: ''},
+    {paiva: new Date(2021, 7, 17), ruoka: 'nakkikastike ja perunat'},
+    {paiva: new Date(2021, 7, 18), ruoka: 'superpuuro'},
+    {paiva: new Date(2021, 7, 19), ruoka: 'tonnikalapastavuoka'},
+    {paiva: new Date(2021, 7, 20), ruoka: 'curry-kalkkunakeitto'},
+    {paiva: new Date(2021, 7, 21), ruoka: 'kalapihvi ja perunat'},
+    {paiva: new Date(2021, 7, 22), ruoka: ''}
   ];
 
   const ohjelma = [
-    {paiva: new Date(2021, 7, 15), tapahtumat: ['7lk mono patsaskierros', '8lk mono vesistö', '9lk mono yritykset']},
-    {paiva: new Date(2021, 7, 16), tapahtumat: ['viikonloppu', 'Jerellä työskentelypäivä']},
-    {paiva: new Date(2021, 7, 17), tapahtumat: ['viikonloppu']},
-    {paiva: new Date(2021, 7, 18), tapahtumat: ['monojen käsittely']}
+    {paiva: new Date(2021, 7, 14), tapahtumat: ['7lk mono patsaskierros', '8lk mono vesistö', '9lk mono yritykset']},
+    {paiva: new Date(2021, 7, 15), tapahtumat: ['viikonloppu', 'Jerellä työskentelypäivä']},
+    {paiva: new Date(2021, 7, 16), tapahtumat: ['viikonloppu']},
+    {paiva: new Date(2021, 7, 17), tapahtumat: ['monojen käsittely']}
   ]
 
   function alusta() {
@@ -140,7 +179,7 @@
     };
   }
 
-  function uudelleenLataus(){
+  function uudelleenLataus() {
     setTimeout(() => location.reload(), 300_000);
   }
 
