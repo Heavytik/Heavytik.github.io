@@ -1,50 +1,153 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <meta charset="utf-8" />
-<title>Isokylä, yläkoulu</title>
+    <meta charset="utf-8"/>
+    <title>Isokylä, yläkoulu</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+        }
+
+        h1 {
+            font-size: 10rem;
+            margin-bottom: 10rem;
+            margin-top: 10rem;
+        }
+        h2 {
+            font-size: 8rem;
+        }
+
+        .huomioteksti {
+            font-size: 6rem;
+        }
+    </style>
 </head>
+
 <body>
-
-<h1>Isokylän yläkoulu, tiedotteet</h1>
-
-<div class="content">
-    <div id="ruokalista">
-        Tämä on tämänpäivän ruoka
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-auto align-self-center">
+            <h1>Isokylän yläkoulu, tiedotteet</h1>
+        </div>
     </div>
-    <div id="info">
-        Tämä on infoa... :D
+    <div class="row mx-5">
+        <div class="col-3 text-danger huomioteksti">
+            <p>tänään ruokana:</p>
+            <p id="ruoka"></p>
+        </div>
+        <div class="col-9 huomioteksti" id="ohjelma">
+            <div class="mb-5">
+                <h2 class="mb-5">tänää ohjelmassa:</h2>
+                <ul class="text-info" id="tanaanOhjelmaa"></ul>
+            </div>
+            <div>
+                <h2 class="mb-5">huomenna ohjelmassa:</h2>
+                <ul class="text-info" id="huomennaOhjelmaa"></ul>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
+  const ruokalista = [
+    {paiva: new Date(2021, 7, 13, 20), ruoka: 'kinkkukiusaus'},
+    {paiva: new Date(2021, 7, 14, 20), ruoka: 'perunamuusi ja lohi'},
+    {paiva: new Date(2021, 7, 14, 20), ruoka: 'sillisalaatti'},
+    {paiva: new Date(2021, 7, 15, 20), ruoka: 'pinaattikeitto'}
+  ];
+
+  const ohjelma = [
+    {paiva: new Date(2021, 7, 15), tapahtumat: ['7lk mono patsaskierros', '8lk mono vesistö', '9lk mono yritykset']},
+    {paiva: new Date(2021, 7, 16), tapahtumat: ['viikonloppu']},
+    {paiva: new Date(2021, 7, 17), tapahtumat: ['viikonloppu']},
+    {paiva: new Date(2021, 7, 18), tapahtumat: ['monojen käsittely']}
+  ]
+
   function alusta() {
 
     var naytaInfo = false;
+    var paivanRuoka = 'tänään ruokana: ' + 'pinaattikeitto';
+    var tanaanInfo;
+    var huomennaInfo;
 
     function vaihdaNakyma() {
+      const mainContentElement = document.getElementById('content');
+
       if (naytaInfo === true) {
-        document.getElementById('ruokalista').style.visibility = 'visible';
-        document.getElementById('info').style.visibility = 'hidden';
+        mainContentElement.innerText = 'foo';
+
+        mainContentElement.classList.remove('huomioteksti')
         naytaInfo = false;
       } else {
-        document.getElementById('ruokalista').style.visibility = 'hidden';
-        document.getElementById('info').style.visibility = 'visible';
+        mainContentElement.innerText = paivanRuoka;
+        mainContentElement.classList.add('huomioteksti')
         naytaInfo = true;
       }
     }
 
-    function toisto() {
-      console.log('tilanne', naytaInfo)
-      vaihdaNakyma();
-      setTimeout(toisto, 2000)
+    function paivitaTiedot() {
+      const aikaNyt = new Date();
+      const aikaAamulla = null;
+      const aikaHuomisaamu = null;
+      const aikaHuomisIlta = null;
+      console.log('nyt ', aikaNyt);
+
+      // asetetaan ruoka
+      paivanRuoka = ruokalista.find(ruoka => ruoka.paiva.getTime() >= aikaNyt.getTime())
+      if (paivanRuoka !== undefined)
+        document.getElementById('ruoka').innerText = paivanRuoka.ruoka;
+
+      // etsitään päivän ohjelmat
+      tanaanInfo = ohjelma.find(paiva => paiva.paiva.getTime() >= aikaNyt.getTime()).tapahtumat
+      huomennaInfo = ohjelma.find(paiva => paiva.paiva.getTime() >= aikaNyt.getTime() + 86400000).tapahtumat
+
+      // asetetaan päivän ohjelmat
+      tanaanLista = document.getElementById('tanaanOhjelmaa');
+      tanaanLista.innerHTML = '';
+      tanaanInfo.forEach(tapahtuma => {
+        const listaElementti = document.createElement('li');
+        listaElementti.innerText = tapahtuma;
+        tanaanLista.appendChild(listaElementti);
+      })
+
+      // asetetaan huomisen ohjelmat
+      huomennaLista = document.getElementById('huomennaOhjelmaa');
+      huomennaLista.innerHTML = '';
+      huomennaInfo.forEach(tapahtuma => {
+        const listaElementti = document.createElement('li');
+        listaElementti.innerText = tapahtuma;
+        huomennaLista.appendChild(listaElementti);
+      })
     }
 
-    return toisto;
+    function kierto() {
+      console.log('tilanne', naytaInfo);
+      vaihdaNakyma();
+      naytaInfo ? setTimeout(kierto, 5000) : setTimeout(kierto, 2000);
+    }
+
+    function paivitys() {
+      console.log('paivitys');
+      paivitaTiedot();
+    }
+
+    return {
+      kierto: kierto,
+      paivitys: paivitys
+    };
   }
 
-  const toistofunktio = alusta();
-  toistofunktio();
+  function uudelleenLataus(){
+    setTimeout(() => location.reload(), 300_000);
+  }
+
+  const {kierto, paivitys} = alusta();
+
+  paivitys();
+  uudelleenLataus();
 
 </script>
 </body>
