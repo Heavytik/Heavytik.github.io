@@ -98,39 +98,73 @@
     </div>
 </footer>
 <script>
-  const ruokalista = [
-    {paiva: new Date(2021, 7, 15), ruoka: ''},
-    {paiva: new Date(2021, 7, 16), ruoka: ''},
-    {paiva: new Date(2021, 7, 17), ruoka: 'nakkikastike ja perunat'},
-    {paiva: new Date(2021, 7, 18), ruoka: 'superpuuro'},
-    {paiva: new Date(2021, 7, 19), ruoka: 'tonnikalapastavuoka'},
-    {paiva: new Date(2021, 7, 20), ruoka: 'curry-kalkkunakeitto'},
-    {paiva: new Date(2021, 7, 21), ruoka: 'kalapihvi ja perunat'},
-    {paiva: new Date(2021, 7, 22), ruoka: ''}
-  ];
-
-  const ohjelma = [
-    {paiva: new Date(2021, 7, 14), tapahtumat: ['7lk mono patsaskierros', '8lk mono vesistö', '9lk mono yritykset']},
-    {paiva: new Date(2021, 7, 15), tapahtumat: ['viikonloppu', 'Jerellä työskentelypäivä']},
-    {paiva: new Date(2021, 7, 16), tapahtumat: ['viikonloppu']},
-    {paiva: new Date(2021, 7, 17), tapahtumat: ['monojen käsittely']},
-    {paiva: new Date(2021, 7, 18), tapahtumat: []},
-    {paiva: new Date(2021, 7, 19), tapahtumat: []},
-    {paiva: new Date(2021, 7, 20), tapahtumat: []},
+  const data = [
     {
-      paiva: new Date(2021, 7, 21), tapahtumat: [
-        '7lk, 8 A/B sekä 7-9G perinneliikuntapäivä urheilukentällä 8:15 - 10:15',
-        '7lk, 8 A/B sekä 7-9G koululla teemapäivien koonti 11:05 - 13:00',
-        '8 C/D sekä 9lk kouluilla teemapäivien koonti 8:15 - 10',
-        '8 C/D sekä 9lk perinneliikuntapäivä urheilukentällä 11:05 - 13:00',
-      ]
-    }
-  ]
+      paiva: new Date(2021, 7, 23),
+      ruoka: '',
+      tapahtumat: ['sunnuntai']
+    },
+    {
+      paiva: new Date(2021, 7, 24),
+      ruoka: 'Naudanliharuukku ja riisi',
+      tapahtumat: []
+    },
+    {
+      paiva: new Date(2021, 7, 25),
+      ruoka: 'Tomaattinen jauhelihakeitto',
+      tapahtumat: []
+    },
+    {
+      paiva: new Date(2021, 7, 26),
+      ruoka: 'Tex-mex perunavuoka',
+      tapahtumat: [
+        'KOULUKUVAUKSET',
+        '7B 8:30 || 7C 8:50 || 7D 9:10 ||  7A 9:30',
+        '8A 10:00 || 8B 10:20 || 8C 10:40 || 8D 11:00 || 8-9G 11:15',
+        'koko koulu 12:00',
+        '9A 12:30 || 9B 12:50 || 9C 13:10 || 9D 13:30']
+    },
+    {
+      paiva: new Date(2021, 7, 27),
+      ruoka: 'Makkarakeitto',
+      tapahtumat: []
+    },
+    {
+      paiva: new Date(2021, 7, 28),
+      ruoka: 'Lihapyörykät ja perunamuusi',
+      tapahtumat: []
+    },
+    {
+      paiva: new Date(2021, 7, 29),
+      ruoka: '',
+      tapahtumat: ['lauantai']
+    },
+    {
+      paiva: new Date(2021, 7, 30),
+      ruoka: '',
+      tapahtumat: ['sunnuntai']
+    },
+    {
+      paiva: new Date(2021, 7, 31),
+      ruoka: '',
+      tapahtumat: []
+    },
+    {
+      paiva: new Date(2021, 8, 1),
+      ruoka: '',
+      tapahtumat: []
+    },
+    {
+      paiva: new Date(2021, 8, 2),
+      ruoka: '',
+      tapahtumat: []
+    },
+  ];
 
   function alusta() {
 
     var naytaInfo = false;
-    var paivanRuoka = 'tänään ruokana: ' + 'pinaattikeitto';
+    var paivanRuoka;
     var tanaanInfo;
     var huomennaInfo;
 
@@ -151,19 +185,22 @@
 
     function paivitaTiedot() {
       const aikaNyt = new Date();
-      const aikaAamulla = null;
-      const aikaHuomisaamu = null;
-      const aikaHuomisIlta = null;
-      console.log('nyt ', aikaNyt);
 
-      // asetetaan ruoka
-      paivanRuoka = ruokalista.find(ruoka => ruoka.paiva.getTime() >= aikaNyt.getTime())
-      if (paivanRuoka !== undefined)
-        document.getElementById('ruoka').innerText = paivanRuoka.ruoka;
+      const tanaan = data.find(paiva => paiva.paiva.getTime() >= aikaNyt.getTime())
+      const huomenna = data.find(paiva => paiva.paiva.getTime() >= aikaNyt.getTime() + 86400000)
 
-      // etsitään päivän ohjelmat
-      tanaanInfo = ohjelma.find(paiva => paiva.paiva.getTime() >= aikaNyt.getTime()).tapahtumat
-      huomennaInfo = ohjelma.find(paiva => paiva.paiva.getTime() >= aikaNyt.getTime() + 86400000).tapahtumat
+      if (!tanaan || !huomenna) {
+        paivanRuoka = ''
+        tanaanInfo = ''
+        huomennaInfo = ''
+      } else {
+        // asetetaan ruoka
+        paivanRuoka = tanaan.ruoka ?? ''
+
+        // etsitään päivän ohjelmat
+        tanaanInfo = tanaan.tapahtumat ?? []
+        huomennaInfo = huomenna.tapahtumat ?? []
+      }
 
       // asetetaan päivän ohjelmat
       tanaanLista = document.getElementById('tanaanOhjelmaa');
