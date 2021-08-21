@@ -114,7 +114,7 @@
     },
     {
       paiva: new Date(2021, 7, 23),
-      ruoka: '',
+      ruoka: 'ei ruokaa',
       tapahtumat: ['sunnuntai']
     },
     {
@@ -209,6 +209,7 @@
       } else {
         // asetetaan ruoka
         paivanRuoka = tanaan.ruoka ?? ''
+        document.getElementById('ruoka').innerText = paivanRuoka
 
         // etsitään päivän ohjelmat
         tanaanInfo = tanaan.tapahtumat ?? []
